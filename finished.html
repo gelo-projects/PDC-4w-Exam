@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finished Exam</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #4a90e2; /* Sky blue */
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #road {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 80px;
+            background: repeating-linear-gradient(
+                to right, 
+                #4d4d4d 0, #4d4d4d 30px, 
+                #f9d342 30px, #f9d342 40px
+            ); /* Road with yellow dashed line */
+            animation: moveRoad 1.5s linear infinite;
+        }
+
+        @keyframes moveRoad {
+            0% { background-position: 0 0; }
+            100% { background-position: 100px 0; }
+        }
+
+        #message {
+            text-align: center;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            animation: floatScale 4s ease-in-out infinite;
+        }
+
+        @keyframes floatScale {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.05); }
+        }
+
+        #quote {
+            color: white;
+            font-size: 20px;
+            font-style: italic;
+            margin-top: 10px;
+            animation: slideFadeUp 3s ease-in-out infinite;
+        }
+
+        @keyframes slideFadeUp {
+            0%, 100% { opacity: 0; transform: translateY(20px); }
+            50% { opacity: 1; transform: translateY(0); }
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 12px 30px;
+            font-size: 18px;
+            background-color: #ff8c00; /* Orange */
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: #ff5c00; /* Darker orange */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="road"></div>
+    <div id="message">Good luck on your application for your Driver's License! We hope you learn from A1C Driving Academy.</div>
+    <div id="quote">"Defensive driving is not just a skill, it's a way of life!"</div>
+    <button onclick="goToHome()">Back to Home</button>
+
+    <script>
+        function goToHome() {
+            window.location.href = 'index.html'; // Adjust this to your home page
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projector Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #4a90e2;
+            color: white;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+
+        #questionContainer {
+            margin: 20px auto; /* Center horizontally */
+            width: 90%; /* Take up most of the width */
+            max-width: 1200px; /* Prevent stretching too wide */
+            max-height: 1200px;
+            height: 90%;
+
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: left; /* Align text to the left */
+            overflow: hidden;
+            opacity: 1; /* Make sure the element is visible */
+            transition: all 0.5s ease; /* Smooth transition for any layout changes */
+        }
+
+        #questionText, #tagalogText {
+            margin: 0;
+            text-align: left;
+            color: black; /* Change question text color to black */
+        }
+
+        #questionText {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        #tagalogText {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        #optionsContainer {
+            margin-top: 20px;
+        }
+
+        #questionImage {
+            display: block;
+            width: 100%;
+            max-width: 400px; /* Limit image size */
+            height: auto;
+            margin: 20px auto; /* Center the image */
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        #timer {
+            position: fixed;
+            bottom: 20px; /* Position in the lower right corner */
+            right: 20px;
+            font-size: 42px;
+            color: #333;
+            text-align: center;
+            transition: color 0.5s ease; /* Animation for color change */
+        }
+
+        footer {
+            text-align: center;
+            color: floralwhite;
+            margin: 0;
+            padding: 30px 0;
+            background-color: #4a90e2;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        #searchContainer {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 18px;
+            font-size: 16px;
+            background-color: #ffffff; /* Corrected to valid color */
+            color: black;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 5px; /* Optional: Adds slight rounding to buttons */
+            transition: background-color 0.3s ease; /* Smooth hover transition */
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            color: white; /* Optional: Change text color on hover for better contrast */
+        }
+
+        .options {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .option {
+            font-size: 20px;
+            margin: 2px; /* Remove margins between choices */
+            padding: 10px;
+            background-color: #f0f0f0;
+            color: black;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .option:hover {
+            background-color: #dcdcdc;
+        }
+
+        .hint {
+            margin-top: 15px;
+            font-style: italic;
+            color: #555;
+        }
+
+        /* Animation classes */
+        .slide-in {
+            opacity: 1;
+            transform: translateX(0); /* Slide in to position */
+        }
+
+        .slide-out {
+            opacity: 0;
+            transform: translateX(-100%); /* Slide out to the left */
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Pulse animation class */
+        .pulse {
+            animation: pulse 1s infinite;
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            #questionContainer {
+                width: 95%; /* Make it more responsive on smaller screens */
+                padding: 10px;
+            }
+
+            #questionText {
+                font-size: 24px; /* Adjust text size for smaller screens */
+            }
+
+            #tagalogText {
+                font-size: 18px; /* Adjust text size for smaller screens */
+            }
+
+            #timer {
+                font-size: 24px; /* Adjust timer size for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Exam Page -->
+<div id="examPage">
+    <div id="questionContainer" class="slide-in"> <!-- Added 'slide-in' class for initial visibility -->
+        <div>
+            <h2 id="questionText"></h2>
+            <h3 id="tagalogText"></h3>
+            <div class="options" id="optionsContainer"></div>
+            <div class="hint" id="hintText" style="display: none;"></div>
+        </div>
+        <img id="questionImage" src="" alt="">
+    </div>
+
+    <div id="searchContainer">
+        <label for="searchInput">Go to question:</label>
+        <input type="text" id="searchInput" placeholder="Enter question number">
+        <button onclick="searchQuestion()">Search</button>
+        <button onclick="previousQuestion()">◀</button>
+        <button onclick="nextQuestion()">▶</button>
+    </div>
+</div>
+
+<footer>Created by: Gelo Aves</footer>
+
+<div id="timer">30s</div> <!-- Moved timer to lower right corner -->
+
+<script>
+    let questions = [
+                {    //   //1
+    text: "What should you prepare for a long trip?",
+    tagalog: "Ano ang mga dapat mong iahanda kung mahaba ang byahe?",
+    image: "",
+    options: [
+        "A. Plan the route and condition the vehicle.",
+        "B. Prepare vehicle repair tools in case of breakdown.",
+        "C. All answers are correct."
+    ],
+    hint: "Hint: More preparation is better.",
+    answer: "C. All answers are correct."
+},
+{   //2
+    text: "What should you do if a passenger wants to get off?",
+    tagalog: "Ano ang dapat mong gawin kung may pasahero na gustong bumaba?",
+    image: "",
+    options: [
+        "A. Tell them to hurry up to avoid delaying other passengers.",
+        "B. Remind them to be careful when getting off.",
+        "C. All answers are correct."
+    ],
+    hint: "Hint: Safety is always important.",
+    answer: "C. All answers are correct."
+},
+{   //3
+    text: "At an intersection with no traffic signals, two vehicles arrive. Which vehicle has the right of way?",
+    tagalog: "Sa isang intersekyon na walang nakatalagang senyas trapiko, dalawang sasakyan ang dumarating. Aling sasakyan ang may Karapatan sa daan?",
+    image: "",
+    options: [
+        "A. The vehicle that slowed down first.",
+        "B. The vehicle coming from the right.",
+        "C. The vehicle coming from the left."
+    ],
+    hint: "Hint: The right side has priority.",
+    answer: "B. The vehicle coming from the right."
+},
+{   //4
+    text: "What should you do when approaching a curve?",
+    tagalog: "Kung parating ka sa isang kurbada, ano ang dapat mong gawin?",
+    image: "",
+    options: [
+        "A. Speed up while on the curve.",
+        "B. Slow down before reaching the curve.",
+        "C. Brake suddenly while driving on the curve."
+    ],
+    hint: "Hint: It's safer to slow down before entering.",
+    answer: "B. Slow down before reaching the curve."
+},
+{    //   //5
+    text: "When a motorcyclist plans to turn right or left, what signal should they use?",
+    tagalog: "Sa naka motorsiklo na may balak lumiko pakanan o pakaliwa, ang dapat na gamitin na senyales ay signal light.",
+    image: "",
+    options: [
+        "A. Use their foot.",
+        "B. Correct.",
+        "C. Incorrect."
+    ],
+    hint: "Hint: Think about using proper signals.",
+    answer: "B. Correct."
+},
+
+{   //6
+    text: "What does a red traffic light mean?",
+    tagalog: "Ano ang kahulugan ng kulay pulang ilaw trapiko?",
+    image: "",
+    options: [
+        "A. Stop and wait for the green light.",
+        "B. Drive slowly and proceed if safe.",
+        "C. Continue driving."
+    ],
+    hint: "Hint: Red means stop.",
+    answer: "A. Stop and wait for the green light."
+},
+{   //7
+    text: "Having a license is a:",
+    tagalog: "Ang pagkakaroon ng lisensya ay isang:",
+    image: "",
+    options: [
+        "A. Right.",
+        "B. Honor.",
+        "C. Privilege."
+    ],
+    hint: "Hint: It's something you earn.",
+    answer: "C. Privilege."
+},
+{   //8
+    text: "Where are you not allowed to overtake?",
+    tagalog: "Saang lugar ka hindi maaaring lumusot (overtake)?",
+    image: "",
+    options: [
+        "A. At the foot of a bridge.",
+        "B. All answers are correct.",
+        "C. At intersections."
+    ],
+    hint: "Hint: It's safer to avoid overtaking in certain places.",
+    answer: "B. All answers are correct."
+},
+{   //9
+    text: "What is the safest rule, even if you have the right of way?",
+    tagalog: "Ang pinaka ligtas na alituntunin kahit ikaw ang may Karapatan sa daan ay:",
+    image: "",
+    options: [
+        "A. Do not insist on your right of way.",
+        "B. Honk your horn.",
+        "C. Always insist on your right of way."
+    ],
+    hint: "Hint: Safety over rights.",
+    answer: "A. Do not insist on your right of way."
+},
+{   //10
+    text: "If the brake lights of the vehicle in front of you light up:",
+    tagalog: "Kung umilaw ang breaklights ng sasakyang nasa inyong unahan:",
+    image: "",
+    options: [
+        "A. Speed up.",
+        "B. Step on the brakes immediately.",
+        "C. Be ready to brake."
+    ],
+    hint: "Hint: Be prepared for sudden stops.",
+    answer: "C. Be ready to brake."
+},
+{    //11
+    text: "On a highway, if you want to drive slower than others, where should you go?",
+    tagalog: "Sa highway kung nais mong magpabagal ng takbo kaysa sa iba, dapat kaung gumawi sa:",
+    image: "",
+    options: [
+        "A. The center of the road.",
+        "B. The far right side of the road.",
+        "C. The far left side of the road."
+    ],
+    hint: "Hint: Slower vehicles usually stay on the right.",
+    answer: "B. The far right side of the road."
+},
+{    //12
+    text: "Why shouldn't you overtake at the foot of a bridge?",
+    tagalog: "Hindi dapat lumusot (overtake) sa paanan ng tulay sapagkat:",
+    image: "",
+    options: [
+        "A. Pedestrians might be crossing.",
+        "B. Oncoming vehicles are not visible.",
+        "C. The road is narrow."
+    ],
+    hint: "Hint: Consider visibility and road width.",
+    answer: "B. Oncoming vehicles are not visible."
+},
+{    //13
+    text: "At an intersection with no traffic signals, two vehicles arrive from different streets. Which vehicle should give way?",
+    tagalog: "Sa isang intersection na walang nakatalagang senyas trapiko, dalawang sasakyan ang dumarating mula sa magkaibang kalye, aling sasakyan ang dapat magbigay?",
+    image: "",
+    options: [
+        "A. The one that arrived last.",
+        "B. The one that arrived first.",
+        "C. The one that slowed down first."
+    ],
+    hint: "Hint: The first to arrive has the right of way.",
+    answer: "B. The one that arrived first."
+},
+{    //14
+    text: "Why is a left turn dangerous?",
+    tagalog: "Mapanganib ang palikong kaliwa sa kanan sapagkat:",
+    image: "",
+    options: [
+        "A. You need to be alert for vehicles from the left, right, and oncoming traffic.",
+        "B. Vehicles from the left, right, and oncoming traffic are fast."
+    ],
+    hint: "Hint: Be aware of multiple directions.",
+    answer: "A. You need to be alert for vehicles from the left, right, and oncoming traffic."
+},
+{    //15
+    text: "What does a flashing yellow traffic light mean?",
+    tagalog: "Ano ang kahulugan ng pataw sinding dilaw na ilaw ng trapiko?",
+    image: "",
+    options: [
+        "A. Stop and wait for the light to change.",
+        "B. Wait for the green light.",
+        "C. Slow down and proceed if there is no danger."
+    ],
+    hint: "Hint: Yellow usually means caution.",
+    answer: "C. Slow down and proceed if there is no danger."
+},
+
+{    //16
+    text: "What does a blue traffic sign mean?",
+    tagalog: "Ano ang kahulugan ng senyas trapikong kulay asul?",
+    image: "",
+    options: [
+        "A. Provides information.",
+        "B. Gives a warning.",
+        "C. Regulates."
+    ],
+    hint: "Hint: Blue signs often provide guidance or information.",
+    answer: "A. Provides information."
+},
+{    //17
+    text: "What does a triangular-shaped traffic sign mean?",
+    tagalog: "Ano ang kahulugan ng senyas trapikong kulay at tatsulok ang hugis?",
+    image: "",
+    options: [
+        "A. Provides information.",
+        "B. Regulates.",
+        "C. Gives a warning."
+    ],
+    hint: "Hint: Triangles often indicate warnings.",
+    answer: "C. Gives a warning."
+},
+{    //18
+    text: "What is the speed limit in a school zone?",
+    tagalog: "Ano ang takdang tulin ng isang sasakyan sa lugar ng paaralan?",
+    image: "",
+    options: [
+        "A. 30 kph.",
+        "B. 20 kph.",
+        "C. 25 kph."
+    ],
+    hint: "Hint: Think about the slowest and safest speed.",
+    answer: "B. 20 kph."
+},
+{    //19
+    text: "When should you signal before turning right or left at an intersection?",
+    tagalog: "Kailangan magbigay ng senyas kung kakanan o kakaliwa sa daratnang intersekyon sa layong:",
+    image: "",
+    options: [
+        "A. 60m.",
+        "B. 15m.",
+        "C. 30m."
+    ],
+    hint: "Hint: You should signal well in advance but not too early.",
+    answer: "C. 30m."
+},
+{    //20
+    text: "When changing lanes, you should signal, check your rearview mirror, and:",
+    tagalog: "Sa tuwing lilipat ng linya, dapat sumenyas, tignan ang iyong “rear” view mirror at:",
+    image: "",
+    options: [
+        "A. Turn on your headlights.",
+        "B. Honk your horn.",
+        "C. Check for oncoming vehicles."
+    ],
+    hint: "Hint: Safety first before moving to another lane.",
+    answer: "C. Check for oncoming vehicles."
+},
+{    //21
+    text: "What does a broken white line indicate?",
+    tagalog: "Ang puting linya na putol-putol ay palatandaan na:",
+    image: "",
+    options: [
+        "A. You may pass left or right if safe.",
+        "B. Overtaking to the left is prohibited.",
+        "C. Overtaking to the right is prohibited."
+    ],
+    hint: "Hint: Broken lines usually allow movement.",
+    answer: "A. You may pass left or right if safe."
+},
+{    //22
+    text: "When parking uphill with a curb, you should turn the wheels:",
+    tagalog: "Kung paparada ng paahon sa may bangketa, dapat mong ipihit ang gulong:",
+    image: "",
+    options: [
+        "A. Toward the curb.",
+        "B. Away from the curb.",
+        "C. In any direction."
+    ],
+    hint: "Hint: Think of preventing the car from rolling back.",
+    answer: "B. Away from the curb."
+},
+{    //23
+    text: "What does a continuous yellow line mean?",
+    tagalog: "Ano ang kahulugan ng tuloy-yuloy na guhit na kulay dilaw?",
+    image: "",
+    options: [
+        "A. No overtaking allowed.",
+        "B. Overtaking is allowed.",
+        "C. All answers are correct."
+    ],
+    hint: "Hint: Continuous lines usually restrict movement.",
+    answer: "A. No overtaking allowed."
+},
+{    //24
+    text: "Ignoring traffic lights can:",
+    tagalog: "Ang hindi pagpansin sa ilaw trapiko ay:",
+    image: "",
+    options: [
+        "A. Save fuel.",
+        "B. Show that you are a skilled driver.",
+        "C. Lead to accidents or danger."
+    ],
+    hint: "Hint: Ignoring traffic signals has safety risks.",
+    answer: "C. Lead to accidents or danger."
+},
+{    //25
+    text: "In a roundabout, who has the right of way?",
+    tagalog: "Sa mga rotonda, alin ang may karapatan sa daan?",
+    image: "",
+    options: [
+        "A. Vehicles facing the green light.",
+        "B. Vehicles already in the roundabout.",
+        "C. Vehicles entering the roundabout."
+    ],
+    hint: "Hint: Those inside the roundabout usually have priority.",
+    answer: "B. Vehicles already in the roundabout."
+},
+{    //26
+    text: "If you are caught for a violation, how many days are you given to settle the case?",
+    tagalog: "Kung ikaw ay nahuli, ilang araw ang palugit upang maayos ang iyong kaso?",
+    image: "",
+    options: [
+        "A. 15 days.",
+        "B. 30 days.",
+        "C. 10 days."
+    ],
+    hint: "Hint: It's usually not too long, but more than a week.",
+    answer: "A. 15 days."
+},
+{    //27
+    text: "At an intersection with a 'STOP SIGN,' you should:",
+    tagalog: "Sa isang intersekyon na may 'STOP SIGN' dapat kang:",
+    image: "",
+    options: [
+        "A. Yield to vehicles from the left or right and proceed if safe.",
+        "B. Slow down and proceed if safe.",
+        "C. Stop and proceed if safe."
+    ],
+    hint: "Hint: A stop sign requires a full stop before continuing.",
+    answer: "C. Stop and proceed if safe."
+},
+{    //28
+    text: "Overtaking is prohibited at the foot of a bridge because:",
+    tagalog: "Ipinagbabawal ang paglusot (overtake) sa paanan ng tulay sapagkat:",
+    image: "",
+    options: [
+        "A. The bridge is narrow.",
+        "B. There are pedestrians crossing.",
+        "C. It is dangerous and oncoming vehicles are not visible."
+    ],
+    hint: "Hint: Blind spots and narrow spaces make overtaking risky.",
+    answer: "C. It is dangerous and oncoming vehicles are not visible."
+},
+{    //29
+    text: "What does two broken yellow lines indicate?",
+    tagalog: "Ang dalawang dilaw na linya na putol-putol ay palatandaan na:",
+    image: "",
+    options: [
+        "A. Overtaking to the left is prohibited.",
+        "B. You may pass left or right if safe.",
+        "C. Overtaking to the right is prohibited."
+    ],
+    hint: "Hint: Broken lines generally allow passing.",
+    answer: "B. You may pass left or right if safe."
+},
+{    //30
+    text: "Why is a left turn more dangerous than a right turn?",
+    tagalog: "Mapanganib ang likong pakaliwa kaysa pakanan sapagkat:",
+    image: "",
+    options: [
+        "A. There are traffic lights to the left.",
+        "B. There are fewer vehicles from the right.",
+        "C. Vehicles coming from the left, right, and opposite are usually moving fast."
+    ],
+    hint: "Hint: Left turns expose you to more potential traffic.",
+    answer: "C. Vehicles coming from the left, right, and opposite are usually moving fast."
+},
+{    //31
+    text: "What does a circular blue and white traffic sign mean?",
+    tagalog: "Ano ang kahulugan ng senyas trapikong kulay asul at puti na pabilog ang hugis?",
+    image: "",
+    options: [
+        "A. Provides direction and information.",
+        "B. Sets a rule or requirement.",
+        "C. Gives a warning."
+    ],
+    hint: "Hint: Blue signs usually provide information.",
+    answer: "A. Provides direction and information."
+},
+{    //32
+    text: "For a long trip, what should you do?",
+    tagalog: "Kung malayo ang byahe, kailangan mong:",
+    image: "",
+    options: [
+        "A. All answers are correct.",
+        "B. Prepare tools for vehicle repair in case of breakdown.",
+        "C. Plan the route and check the condition of the vehicle."
+    ],
+    hint: "Hint: Preparing ahead helps prevent issues on long trips.",
+    answer: "A. All answers are correct."
+},
+{    //33
+    text: "Where are you not allowed to park?",
+    tagalog: "Saang lugar hindi maaari pumarada?",
+    image: "",
+    options: [
+        "A. Pedestrian crossing.",
+        "B. A driveway.",
+        "C. Designated parking areas."
+    ],
+    hint: "Hint: Consider places where parking could obstruct traffic or pedestrians.",
+    answer: "A. Pedestrian crossing."
+},
+{    //34
+    text: "When driving slowly on an expressway, you should move to:",
+    tagalog: "Kung nagpapatakbo ng mabagal sa 'expressway', dapat kang gumawi sa:",
+    image: "",
+    options: [
+        "A. The far left lane.",
+        "B. The far right lane.",
+        "C. The middle lane."
+    ],
+    hint: "Hint: Slow-moving vehicles usually stay on the right.",
+    answer: "B. The far right lane."
+},
+{    //35
+    text: "If the driver in front of you extends their left arm straight out, what are they indicating?",
+    tagalog: "Kung ang driver ng sasakyang nasa unahan mo ay maglalabas ng kanyang kaliwang kamay at inunat ito, nakakatiyak ka na siya ay:",
+    image: "",
+    options: [
+        "A. Turning right.",
+        "B. Stopping.",
+        "C. Turning left."
+    ],
+    hint: "Hint: Hand signals are commonly used to indicate turns.",
+    answer: "C. Turning left."
+},
+{    //36
+    text: "What is the purpose of using a horn?",
+    tagalog: "Ang busina ay ginagamit upang:",
+    image: "",
+    options: [
+        "A. Create noise.",
+        "B. Provide a safety warning.",
+        "C. Show off the sound of the horn."
+    ],
+    hint: "Hint: The horn is meant for communication on the road.",
+    answer: "B. Provide a safety warning."
+},
+{    //37
+    text: "What should you do to fight fatigue and drowsiness during a long trip?",
+    tagalog: "Ano ang dapat mong gawin para malabanan ang pagod at antok sa haba ng byahe?",
+    image: "",
+    options: [
+        "A. Stop occasionally and rest.",
+        "B. Drink alcohol before driving.",
+        "C. Take anti-drowsiness medication."
+    ],
+    hint: "Hint: Resting is the safest option.",
+    answer: "A. Stop occasionally and rest."
+},
+{    //38
+    text: "According to the law, you cannot drive fast unless:",
+    tagalog: "Ayon sa batas, hindi ka maaaring magmaneho ng matulin maliban kung:",
+    image: "",
+    options: [
+        "A. It is within the speed limit.",
+        "B. There is no danger.",
+        "C. All answers are correct."
+    ],
+    hint: "Hint: Speed limits are set to ensure safety.",
+    answer: "C. All answers are correct."
+},
+{    //39
+    text: "Not following traffic lights can:",
+    tagalog: "Ang hindi pagsunod sa ilaw trapiko ay:",
+    image: "",
+    options: [
+        "A. Prove that you're a good driver.",
+        "B. Get you into an accident.",
+        "C. Save gasoline."
+    ],
+    hint: "Hint: Ignoring traffic signals leads to danger.",
+    answer: "B. Get you into an accident."
+},
+{    //40
+    text: "If you are involved in an accident, you must report it to the nearest police station:",
+    tagalog: "Kung nasasangkot sa isang sakuna, dapat itong ipagbigay-alam sa pinaka malapit na himpilan ng polisya:",
+    image: "",
+    options: [
+        "A. Within 72 hours.",
+        "B. Immediately.",
+        "C. Within 48 hours."
+    ],
+    hint: "Hint: Accidents should be reported as soon as possible.",
+    answer: "B. Immediately."
+},
+{    //41
+    text: "What do the two continuous yellow lines indicate?",
+    tagalog: "Ang dalawang dilaw na linya na tuloy-tuloy ay palatandaan na:",
+    image: "",
+    options: [
+        "A. You can overtake to the right.",
+        "B. You can overtake to the left.",
+        "C. Overtaking is prohibited at all times."
+    ],
+    hint: "Hint: Continuous lines restrict movement.",
+    answer: "C. Overtaking is prohibited at all times."
+},
+{    //42
+    text: "If there are pedestrians crossing at a school crossing, what should you do?",
+    tagalog: "Kung may tumatawid sa may tawirang pang paaralan, ano ang dapat mong gawin?",
+    image: "",
+    options: [
+        "A. Stop and do not proceed while people are crossing.",
+        "B. Stop and let the students cross.",
+        "C. Yield to those crossing from the right."
+    ],
+    hint: "Hint: Safety for pedestrians, especially students, is a priority.",
+    answer: "A. Stop and do not proceed while people are crossing."
+},
+{    //43
+    text: "After overtaking, how can you safely return to your original lane?",
+    tagalog: "Matapos kang lumagpas (overtake) at nais mong bumalik sa pinanggalingang linya ng ligtas, kailangan:",
+    image: "",
+    options: [
+        "A. See the vehicle you overtook in your rearview mirror.",
+        "B. Stop.",
+        "C. Look back at the vehicle you overtook."
+    ],
+    hint: "Hint: Check your mirrors to ensure safety.",
+    answer: "A. See the vehicle you overtook in your rearview mirror."
+},
+{    //44
+    text: "If the driver in front of you extends their left hand pointing upward, they intend to:",
+    tagalog: "Kung ang driver ng sasakyang nasa unahan mo ay naglabas ng kaliwang kamay na nakaturo sa itaas, siya ay:",
+    image: "",
+    options: [
+        "A. Turn left.",
+        "B. Stop.",
+        "C. Turn right."
+    ],
+    hint: "Hint: Hand signals are used to indicate turns and stops.",
+    answer: "C. Turn right."
+},
+{    //45
+    text: "When can you overtake on the right side of a vehicle?",
+    tagalog: "Maaari kang lumusot (overtake) sa kanang bahagi ng isang sasakyan kung:",
+    image: "",
+    options: [
+        "A. The road is a two-way street.",
+        "B. The sidewalk is wide.",
+        "C. The highway has two or more lanes going in one direction."
+    ],
+    hint: "Hint: More lanes on a highway allow for safer overtaking on the right.",
+    answer: "C. The highway has two or more lanes going in one direction."
+},
+{    //46
+    text: "The safe guideline, even if you are certain that you have the right of way, is:",
+    tagalog: "Ang ligtas na alituntunin kahit nakatitiyak na ikaw ang may Karapatan sa daan ay:",
+    image: "",
+    options: [
+        "A. Insist on your right of way.",
+        "B. Do not insist on your right of way.",
+        "C. Honk your horn."
+    ],
+    hint: "Hint: Safety comes first, even when you have the right of way.",
+    answer: "B. Do not insist on your right of way."
+},
+{    //47
+    text: "What does a blue and white traffic sign in a rectangular or square shape indicate?",
+    tagalog: "Ano ang kahulugan ng senyas trapiko na kulay asul at puti na parihaba o parisukat ang hugis?",
+    image: "",
+    options: [
+        "A. Gives a warning.",
+        "B. Directs.",
+        "C. Provides information."
+    ],
+    hint: "Hint: These signs typically provide information to drivers.",
+    answer: "C. Provides information."
+},
+{    //48
+    text: "When should a driver make a decision?",
+    tagalog: "Kailan dapat magdesisyon ang isang driver?",
+    image: "",
+    options: [
+        "A. While driving.",
+        "B. When traffic is congested.",
+        "C. When they are already skilled at driving."
+    ],
+    hint: "Hint: Decision-making is crucial while actively driving.",
+    answer: "A. While driving."
+},
+{    //49
+    text: "What does a continuous yellow line indicate?",
+    tagalog: "Ang dilaw na linyang tuloy-tuloy ay palatandaan na:",
+    image: "",
+    options: [
+        "A. Overtaking on the left is prohibited.",
+        "B. Overtaking on the right is prohibited.",
+        "C. Overtaking on the left or right is allowed."
+    ],
+    hint: "Hint: Continuous lines indicate restrictions.",
+    answer: "A. Overtaking on the left is prohibited."
+},
+{    //50
+    text: "What should you do when approaching a curve?",
+    tagalog: "Ano ang dapat mong gawin kung parating na sa isang kurbada?",
+    image: "",
+    options: [
+        "A. Speed up while in the curve.",
+        "B. Brake suddenly while driving.",
+        "C. Slow down before reaching the curve."
+    ],
+    hint: "Hint: Adjust your speed to navigate the curve safely.",
+    answer: "C. Slow down before reaching the curve."
+},
+{    //51
+    text: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/slippery road.png",
+    options: [
+        "A. Bumpy road.",
+        "B. Slippery road.",
+        "C. Steep road."
+    ],
+    hint: "",
+    answer: "B. Slippery road."
+},
+{    //52
+    text: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/speedlimit.png",
+    options: [
+        "A. Designated length for vehicles to pass.",
+        "B. Designated speed limit for vehicles.",
+        "C. The distance to the next intersection is 30 km."
+    ],
+    hint: "",
+    answer: "B. Designated speed limit for vehicles."
+},
+{    //53
+    text: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/no overtaking.png",
+    options: [
+        "A. No entry.",
+        "B. No parking.",
+        "C. No overtaking."
+    ],
+    hint: "",
+    answer: "C. No overtaking."
+},
+{    //54
+    text: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/no right turn.png",
+    options: [
+        "A. No right turn.",
+        "B. No U-turn.",
+        "C. No overtaking."
+    ],
+    hint: "",
+    answer: "A. No right turn."
+},
+{    //55
+    text: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/no entry.png",
+    options: [
+        "A. Stop.",
+        "B. No entry for all vehicles.",
+        "C. Yield."
+    ],
+    hint: "",
+    answer: "B. No entry for all vehicles."
+},
+{    //56
+    text: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/dangerous left curve.png",
+    options: [
+        "A. Dangerous curve to the right.",
+        "B. Dangerous curve to the left.",
+        "C. Dangerous curve ahead."
+    ],
+    hint: "",
+    answer: "B. Dangerous curve to the left."
+},
+{    //57
+    text: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/no jeepney allowed.jpg",
+    options: [
+        "A. No entry for jeepneys.",
+        "B. No entry for cars.",
+        "C. No entry for buses."
+    ],
+    hint: "",
+    answer: "A. No entry for jeepneys."
+},
+{    //58
+    text: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/stop sign.png",
+    options: [
+        "A. Yield.",
+        "B. Stop.",
+        "C. No entry."
+    ],
+    hint: "",
+    answer: "B. Stop."
+},
+{    //59
+    text: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/give way.png",
+    options: [
+        "A. Yield.",
+        "B. Stop.",
+        "C. No entry."
+    ],
+    hint: "",
+    answer: "A. Yield."
+},
+{    //60
+    text: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/river.png",
+    options: [
+        "A. Steep road.",
+        "B. River.",
+        "C. No entry."
+    ],
+    hint: "",
+    answer: "B. River."
+}
+    ];
+
+    let currentQuestionIndex = 0;
+    let timer;
+    let timeLeft = 30;
+
+    function showQuestion(index, initial = false) {
+        const questionContainer = document.getElementById('questionContainer');
+        const questionText = document.getElementById('questionText');
+        const tagalogText = document.getElementById('tagalogText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const questionImage = document.getElementById('questionImage');
+        const hintText = document.getElementById('hintText');
+
+        if (!initial) {
+            // Trigger slide-out animation
+            questionContainer.classList.remove('slide-in');
+            questionContainer.classList.add('slide-out');
+
+            // Wait for the slide-out animation to complete before showing the next question
+            setTimeout(() => {
+                updateQuestionContent(index);
+                // Trigger slide-in animation after updating content
+                questionContainer.classList.remove('slide-out');
+                questionContainer.classList.add('slide-in');
+            }, 500); // Match the timeout to the transition duration
+        } else {
+            // For initial load, directly add slide-in class
+            updateQuestion
+                        updateQuestionContent(index);
+        }
+    }
+
+    function updateQuestionContent(index) {
+        const questionText = document.getElementById('questionText');
+        const tagalogText = document.getElementById('tagalogText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const questionImage = document.getElementById('questionImage');
+        const hintText = document.getElementById('hintText');
+
+        questionText.textContent = `Question #${index + 1}. ${questions[index].text}`;/*questionText.innerText = questions[index].text;*/
+        tagalogText.innerText = questions[index].tagalog;
+        questionImage.src = questions[index].image;
+
+        optionsContainer.innerHTML = '';
+        questions[index].options.forEach(option => {
+            const optionDiv = document.createElement('div');
+            optionDiv.classList.add('option');
+            optionDiv.innerText = option;
+            optionsContainer.appendChild(optionDiv);
+        });
+
+        hintText.style.display = questions[index].hint ? 'block' : 'none';
+        hintText.innerText = questions[index].hint;
+        
+        // Reset timer
+        resetTimer();
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex >= questions.length) {
+            clearInterval(timer);
+            window.location.href = "finished.html"; // Redirect to finish page
+            return;
+        }
+        showQuestion(currentQuestionIndex);
+        resetTimer();
+    }
+
+    function previousQuestion() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            showQuestion(currentQuestionIndex);
+        }
+    }
+
+    function searchQuestion() {
+        const input = document.getElementById('searchInput').value;
+        const index = parseInt(input) - 1; // Convert input to zero-based index
+        if (index >= 0 && index < questions.length) {
+            currentQuestionIndex = index;
+            showQuestion(currentQuestionIndex);
+        } else {
+            alert("Question number out of range.");
+        }
+    }
+
+    function resetTimer() {
+        clearInterval(timer);
+        timeLeft = 30; // Reset time to 30 seconds
+        document.getElementById('timer').innerText = `${timeLeft}s`;
+        startTimer();
+    }
+
+    function startTimer() {
+        timer = setInterval(() => {
+            timeLeft--;
+            document.getElementById('timer').innerText = `${timeLeft}s`;
+            if (timeLeft <= 15) {
+                document.getElementById('timer').classList.add('pulse'); // Add pulse effect
+                document.getElementById('hintText').style.display = 'block';
+                document.getElementById('timer').style.color = 'red';
+            }
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                nextQuestion(); // Automatically go to next question when time runs out
+            }
+        }, 1000);
+    }
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowRight') {
+            nextQuestion();
+        } else if (event.key === 'ArrowLeft') {
+            previousQuestion();
+        } else if (event.key === 'Enter') {
+            searchQuestion();
+        }
+    });
+
+    // Initialize the first question
+    showQuestion(currentQuestionIndex, true);
+</script>
+</body>
+</html>
+
