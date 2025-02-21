@@ -57,7 +57,7 @@
             max-width: 400px; /* Limit image size */
             height: auto;
             margin: 20px auto; /* Center the image */
-            object-fit: cover;
+            object-fit: fit;
             border-radius: 10px;
         }
 
@@ -691,7 +691,7 @@
         ///////////////////////////////////////////////////////////////////////////
         { //61
             text: "ROAD SIGNS: Regulatory signs that, when ignored, will result in a demerit.", 
-            tagalog: "Mga regulasyong senyas na kapag hindi sinunod, magbibigay ng demerit.", 
+            tagalog: "Mga regulasyong karatula na kapag hindi sinunod, magbibigay ng demerit.", 
             image: "images/no parking.png", 
             options: [""], 
             hint: "", 
@@ -700,7 +700,7 @@
 
         { //62
             text: "ROAD SIGNS: Regulatory signs that, when ignored, will result in a demerit.", 
-            tagalog: "Mga regulasyong senyas na kapag hindi sinunod, magbibigay ng demerit.", 
+            tagalog: "Mga regulasyong karatula na kapag hindi sinunod, magbibigay ng demerit.", 
             image: "images/no right turn.png", 
             options: [""], 
             hint: "", 
@@ -709,7 +709,7 @@
 
         { //63
             text: "ROAD SIGNS: Regulatory signs that, when ignored, will result in a demerit.", 
-            tagalog: "Mga regulasyong senyas na kapag hindi sinunod, magbibigay ng demerit.", 
+            tagalog: "Mga regulasyong karatula na kapag hindi sinunod, magbibigay ng demerit.", 
             image: "images/no left turn.png", 
             options: [""], 
             hint: "", 
@@ -718,7 +718,7 @@
 
         { //64
             text: "ROAD SIGNS: You are instructed to slow down. What sign is this?", 
-            tagalog: "Inuutusan kang magbagal. Anong senyas ito?", 
+            tagalog: "Inuutusan kang magbagal. Anong karatula ito?", 
             image: "images/Pedestrian crossing.png", 
             options: [""], 
             hint: "", 
@@ -727,7 +727,7 @@
 
         { //65
             text: "ROAD SIGNS: You are instructed to slow down. What sign is this?", 
-            tagalog: "Inuutusan kang magbagal. Anong senyas ito?", 
+            tagalog: "Inuutusan kang magbagal. Anong karatula ito?", 
             image: "images/merging traffic.png", 
             options: [""], 
             hint: "Hint: ", 
@@ -736,7 +736,7 @@
 
         { //66
             text: "ROAD SIGNS: You are instructed to slow down. What sign is this?", 
-            tagalog: "Inuutusan kang magbagal. Anong senyas ito?", 
+            tagalog: "Inuutusan kang magbagal. Anong karatula ito?", 
             image: "images/traffic light.png", 
             options: [""], 
             hint: "", 
@@ -745,7 +745,7 @@
 
         { //67
             text: "ROAD SIGNS: You are instructed to slow down. What sign is this?", 
-            tagalog: "Inuutusan kang magbagal. Anong senyas ito?", 
+            tagalog: "Inuutusan kang magbagal. Anong karatula ito?", 
             image: "images/roundabout.png", 
             options: [""], 
             hint: "", 
@@ -754,7 +754,7 @@
 
         { //
             text: "ROAD SIGNS: You are instructed to slow down. What sign is this?", 
-            tagalog: "Inuutusan kang magbagal. Anong senyas ito?", 
+            tagalog: "Inuutusan kang magbagal. Anong karatula ito?", 
             image: "images/crossing ahead.png", 
             options: [""], 
             hint: "", 
@@ -807,7 +807,7 @@
 
         { //
             text: "You are instructed to slow down. What sign is this?",
-            tagalog: "Inuutusan kang magbagal. Anong senyas ito?", 
+            tagalog: "Inuutusan kang magbagal. Anong karatula ito?", 
             image: "images/slippery road.png", 
             options: [""], 
             hint: "",
@@ -816,7 +816,7 @@
 
         { //
             text: "You are instructed to slow down. What sign is this?",
-            tagalog: "Inuutusan kang magbagal. Anong senyas ito?", 
+            tagalog: "Inuutusan kang magbagal. Anong karatula ito?", 
             image: "images/left curve.png", 
             options: [""], 
             hint: "",
@@ -825,7 +825,7 @@
 
         { //
             text: "You are instructed to slow down. What sign is this?",
-            tagalog: "Inuutusan kang magbagal. Anong senyas ito?", 
+            tagalog: "Inuutusan kang magbagal. Anong karatula ito?", 
             image: "images/railroad crossing.png", 
             options: [""], 
             hint: "",
@@ -834,7 +834,7 @@
 
         { //
             text: "You are instructed to slow down. What sign is this?",
-            tagalog: "Inuutusan kang magbagal. Anong senyas ito?", 
+            tagalog: "Inuutusan kang magbagal. Anong karatula ito?", 
             image: "images/right curve.png", 
             options: [""], 
             hint: "",
@@ -935,7 +935,7 @@
             tagalog: "Ano ang tawag sa linyang ito?", 
             image: "images/bicycle lane.png", 
             options: [""], 
-            hint: "", 
+
             answer: ['c'] 
         },
         { // 90
@@ -943,7 +943,7 @@
             tagalog: "Ano ang ibig sabihin ng linyang ito?", 
             image: "images/absolute no overtaking.png", 
             options: [""], 
-            hint: "Absolute no ___________", 
+
             answer: ['b'] 
         },
         { // 91
@@ -966,7 +966,6 @@
         const tagalogText = document.getElementById('tagalogText');
         const optionsContainer = document.getElementById('optionsContainer');
         const questionImage = document.getElementById('questionImage');
-        const hintText = document.getElementById('hintText');
 
         if (!initial) {
             // Trigger slide-out animation
@@ -992,7 +991,6 @@
         const tagalogText = document.getElementById('tagalogText');
         const optionsContainer = document.getElementById('optionsContainer');
         const questionImage = document.getElementById('questionImage');
-        const hintText = document.getElementById('hintText');
 
         questionText.textContent = `Question #${index + 1}. ${questions[index].text}`;/*questionText.innerText = questions[index].text;*/
         tagalogText.innerText = questions[index].tagalog;
@@ -1006,8 +1004,6 @@
             optionsContainer.appendChild(optionDiv);
         });
 
-        hintText.style.display = questions[index].hint ? 'block' : 'none';
-        hintText.innerText = questions[index].hint;
         
         // Reset timer
         resetTimer();
