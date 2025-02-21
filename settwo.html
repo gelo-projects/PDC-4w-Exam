@@ -384,7 +384,7 @@
 },
 {    //15
     text: "What does a flashing yellow traffic light mean?",
-    tagalog: "Ano ang kahulugan ng pataw sinding dilaw na ilaw ng trapiko?",
+    tagalog: "Ano ang kahulugan ng patay sinding dilaw na ilaw ng trapiko?",
     image: "",
     options: [
         "A. Stop and wait for the light to change.",
@@ -396,8 +396,8 @@
 },
 
 {    //16
-    text: "What does a blue traffic sign mean?",
-    tagalog: "Ano ang kahulugan ng senyas trapikong kulay asul?",
+    text: "What does a blue road sign mean?",
+    tagalog: "Ano ang kahulugan ng karatulang pangkalsada na kulay asul?",
     image: "",
     options: [
         "A. Provides information.",
@@ -408,8 +408,8 @@
     answer: "A. Provides information."
 },
 {    //17
-    text: "What does a triangular-shaped traffic sign mean?",
-    tagalog: "Ano ang kahulugan ng senyas trapikong kulay at tatsulok ang hugis?",
+    text: "What does a triangular-shaped road sign mean?",
+    tagalog: "Ano ang kahulugan ng karatulang pangkalsada na tatsulok ang hugis?",
     image: "",
     options: [
         "A. Provides information.",
@@ -576,8 +576,8 @@
     answer: "C. Vehicles coming from the left, right, and opposite are usually moving fast."
 },
 {    //31
-    text: "What does a circular blue and white traffic sign mean?",
-    tagalog: "Ano ang kahulugan ng senyas trapikong kulay asul at puti na pabilog ang hugis?",
+    text: "What does a circular blue and white road sign mean?",
+    tagalog: "Ano ang kahulugan ng  karatulang pangkalsada na asul at puti na pabilog ang hugis?",
     image: "",
     options: [
         "A. Provides direction and information.",
@@ -947,7 +947,7 @@
         const tagalogText = document.getElementById('tagalogText');
         const optionsContainer = document.getElementById('optionsContainer');
         const questionImage = document.getElementById('questionImage');
-        const hintText = document.getElementById('hintText');
+        
 
         if (!initial) {
             // Trigger slide-out animation
@@ -973,7 +973,7 @@
         const tagalogText = document.getElementById('tagalogText');
         const optionsContainer = document.getElementById('optionsContainer');
         const questionImage = document.getElementById('questionImage');
-        const hintText = document.getElementById('hintText');
+      
 
         questionText.textContent = `Question #${index + 1}. ${questions[index].text}`;/*questionText.innerText = questions[index].text;*/
         tagalogText.innerText = questions[index].tagalog;
@@ -987,8 +987,7 @@
             optionsContainer.appendChild(optionDiv);
         });
 
-        hintText.style.display = questions[index].hint ? 'block' : 'none';
-        hintText.innerText = questions[index].hint;
+
         
         // Reset timer
         resetTimer();
