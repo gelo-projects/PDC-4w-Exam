@@ -1,74 +1,1463 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projector Exam</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #4a90e2;
-            color: white;
-            overflow: hidden;
-        }
-
-        #landingPage {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-        }
-
-        button {
-            padding: 10px 18px;
-            font-size: 16px;
-            background-color: #ffffff; /* Corrected to valid color */
-            color: black;
-            border: none;
-            cursor: pointer;
-            margin: 10px;
-            border-radius: 5px; /* Optional: Adds slight rounding to buttons */
-            transition: background-color 0.3s ease; /* Smooth hover transition */
-        }
-
-        button:hover {
-            background-color: #0056b3;
-            color: white; /* Optional: Change text color on hover for better contrast */
-        }
-
-        footer {
-            text-align: center;
-            color: floralwhite;
-            margin: 0;
-            padding-top: 30px;
-            padding-bottom: 20px; /* Added padding for better spacing */
-            background-color: #4a90e2; /* Match body background */
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>A1C Driving Academy PDC 4w Final Exam</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+      background: #ECEFF7;
+      font-size: 1.5rem;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      max-height: 90%;
+    }
+    .categories {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 5px;
+    }
+    .category-btn, .option-btn, .action-btn {
+      padding: 5px 5px;
+      font-size: .8rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      outline-style: solid;
+      outline-color: whitesmoke;
+    }
+    .category-btn {
+      background: #0B7DFF;
+      color: white;
+    }
+    .option-btn {
+      background: #fff;
+      border: 1px solid #ccc;
+      display: block;
+      width: 100%;
+      margin-top: 5px;
+    }
+    .action-btn {
+      background: #007BFF;
+      color: white;
+      margin-top: 20px;
+    }
+    .timer {
+      font-size: .8rem;
+      font-weight: bold;
+      margin: 10px 0;
+      color: #FF6347;
+    }
+    img.responsive-img {
+      max-width: 100%;
+      max-height: 150px;
+      object-fit: cover;
+    }
+    .footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      color: black;
+      text-align: center;
+      font-size: 12px;
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <div id="app"></div>
+  </div>
 
-    <!-- Landing Page -->
-<div id="landingPage">
-    <h1>A1C Driving Academy Trece Branch</h1>
-    <h2>FINAL PDC 4w EXAM</h2>
-    <button onclick="window.location.href='setOne.html';">SET ONE</button>
-    <button onclick="window.location.href='settwo.html';">SET TWO</button>
-</div>
+  <script>
+    const categories = [
+      { name: "Set One (100 items)", count: 91, hasImages: true },
+      { name: "Set Two (60) items)", count: 60, hasImages: true },
+    ];
 
-<footer>Created by: Gelo Aves</footer>
+    const setOneQuestions = [
+      { //1
+            question: "According to RA 4136, which section says that when you buy any vehicle powered by electricity or gasoline, you must have your own garage.", 
+            tagalog: "Ayon sa RA 4136, anong seksyon ang nagsasabing kapag bumili ka ng kahit anong sasakyan na pinapaandar ng kuryente or gasolina, marapat lamang na mayroon kang sariling garahe",  
+            options: ["A.SECTION 7", "B.SECTION 3", "C.SECTION 5"], 
+            correct: 1
+        },
+        { //2
+            question: "Anyone who drives any vehicle with an engine is called a _______?", 
+            tagalog: "Ang sinumang nagmamaneho ng kahit na anong sasakyan na may makina ay tatawagin na _______?",  
+            options: ["A.DRIVER", "B.BACKRIDER", "C.RIDER"], 
+            correct: 0
+        },
+        { //3
+            question: "What type of license is used only for personal or private vehicles?", 
+            tagalog: "Anong uri ng lisensya ang ginagamit lamang sa pansarili o mga pribadong sasakyan?", 
+            options: ["A.NON – PROFESSIONAL LICENSE", "B.PROFESSIONAL LICENSE", "C.STUDENT PERMIT"], 
+            correct: 0
+        },
+        { //4
+            question: "If you buy any motor vehicle, you will be called ______.", 
+            tagalog: "Kung ikaw ay bumili ng kahit na anong sasakyang may makina, ikaw ay tatawaging ______.", 
+            options: ["A.DRIVER", "B.OWNER", "C.RIDER"], 
+            correct: 1
+        },
+        { //5
+            question: "When you leave your car without a driver, the engine off, and the hand brake on, you are called a _______.", 
+            tagalog: "Kapag iniwanan mo ang iyong sasakyan na walang driver, patay ang makina, at nakataas ang hand brake, ikaw ay tatawaging _______.", 
+            options: ["A.PARK VEHICLE", "B.STAND BY VEHICLE", "C.NONE OF THE ABOVE"], 
+            correct: 0
+        },
+        { //6
+            question: "All types of highways and public roads can never be called or made ________.",
+            tagalog: "Lahat ng uri ng highways at pampublikong daanan kailan man ay hindi mo pwedeng tawagin o gawing ________.",
+            options: ["A. PARKING LOT OR GARAGE", "B. LOADING AREA", "C. NONE OF THE ABOVE"],
+            hint: "Hint: Think about what public roads are meant for.",
+            correct: 0
+        },
+        { //7
+            question: "According to RA 4136, you must register your vehicle every year. What section is this?",
+            tagalog: "Ayon sa RA 4136, dapat mong iparehistro ang iyong sasakyan taon taon. Anong seksyon ito?",
+            options: ["A. SECTION 6", "B. SECTION 3", "C. SECTION 5"],
+            correct: 2
+        },
+        { //8
+            question: "What RA prohibits over-riding/loading in any type of vehicle?",
+            tagalog: "Anong RA ang pinagbabawal ang sobrang sakay sa kahit anong uri ng sasakyan?",
+            options: ["A. RA 10054", "B. RA 8794", "C. RA 8749"],
+            correct: 1
+        },
+        { //9
+            question: "What type of license plate is used by those with high positions in our government from number 1 to number 17?",
+            tagalog: "Anong uri ng plaka ang ginagamit ng may matataas na katungkulan sa ating gobyerno mula number 1 hanggang number 17?",
+            options: ["A. DIPLOMAT", "B. PROTOCOL PLATES", "C. PUBLIC PLATE NUMBER"],
+            correct: 1
+        },
+        { //10
+            question: "What section says that the plates must be placed in places that are easily visible. One in front and one behind, and according to the law, it must be kept clean and cared for and must not move or be moved?",
+            tagalog: "Anong seksyon ang nagsasabing ang mga plaka ay dapat ilagay sa mga lugar na madaling makita. Isa sa harapan at isa sa likuran, at ayon sa batas, ito ay dapat panatilihing malinis at alagaan at hindi dapat gumagalaw o nagagalaw.",
+            options: ["A. SECTION 18", "B. SECTION 20", "C. SECTION 7"],
+            correct: 0
+        },
+        { //11
+        question: "What section says that you must always carry your license with you wherever you go, and if you leave it behind, you must not continue driving?",
+        tagalog: "Anong seksyon ang nagsasabing dapat lagi mong dala ang iyong lisensya kahit saan ka man magpunta, at kung ito ay iyong naiwan, hindi ka dapat magpatuloy sa pagmamaneho?",
+        options: ["A. SECTION 20", "B. SECTION 19", "C. SECTION 10"],
+        correct: 1
+        },
+        { //12
+            question: "What section says that you will be eligible for a 10-year license renewal if you are found to have no violations for five years?",
+            tagalog: "Anong seksyon ang nagsasabing ikaw ay mapapasama sa 10 taon na renewal ng lisensya kung ikaw ay mapapatunayang walang violation sa loob ng limang taon?",
+            options: ["A. SECTION 19", "B. SECTION 23", "C. SECTION 20"],
+            correct: 1
+        },
+        { //13
+            question: "What section says that all ticket violations you commit will be sent to the LTO tickets repository so that you will be given demerit points?",
+            tagalog: "Anong seksyon ang nagsasabing ang lahat ng nagawa mong ticket violation ay ipapadala sa imbakan ng mga ticket sa LTO upang ikaw ay bigyan ng demerit points?",
+            options: ["A. SECTION 23", "B. SECTION 18", "C. SECTION 22"],
+            correct: 0
+        },
+        { //14
+            question: "What section is amended by RA10930 that will make the rules and regulations more stringent and strict before issuing a license to an applicant?",
+            tagalog: "Anong seksyon ang inamyendahan ng RA10930 na gagawing mas mahigpit at strikto ang mga patakaran at regulasyon bago ibigay ang lisensya sa isang aplikante?",
+            options: ["A. SECTION 23", "B. SECTION 20", "C. SECTION 22"],
+            correct: 0
+        },
+        { //15
+            question: "All holders of licenses that are subject for renewal, and can be proven to have a traffic violation will attend a seminar at the regional office of the LTO. What seminar is this?",
+            tagalog: "Ang lahat ng may mga hawak na lisensya na subject for renewal, at mapapatunayang may traffic violation ay mag aattend ng seminar sa regional office ng LTO. Anong seminar ito?",
+            options: ["A. DRIVING ENHANCEMENT PROGRAM", "B. PRACTICAL DRIVING COURSE", "C. THEORETICAL DRIVING COURSE"],
+            correct: 0
+        },
+        { //16
+            question: "What section of RA 4136 requires that all drivers who move to their new residence must immediately inform the nearest LTO within 15 days?",
+            tagalog: "Anong seksyon ng RA 4136 na inaatasan na ang lahat ng driver na kapag lumipat sa kanilang bagong tirahan ay dapat iinform agad sa pinaka malapit na LTO sa loob ng 15 araw?",
+            options: ["A. SECTION 24", "B. SECTION 20", "C. SECTION 25"],
+            correct: 2
+        },
+        { //17
+            question: "What section of RA 4136 gives the LTO the special power to suspend, revoke, and restore your license without going to court (depending on the gravity of your offense)?",
+            tagalog: "Anong seksyon ng RA 4136 na kung saan ang LTO ay may ispesyal na kakayanan na suspendihin, bawiin, at ibalik ang iyong lisensya na hindi na dadaan sa korte (depende sa bigat ng iyong kasalanan)?",
+            options: ["A. SECTION 25", "B. SECTION 27", "C. SECTION 26"],
+            correct: 1
+        },
+        { //18
+            question: "What section of RA 4136 says that you will only give your license to the LTO deputized traffic enforcer and not to the traffic guide enforcer?",
+            tagalog: "Anong seksyon ng RA 4136 na nagsasabing ang iyong lisensya ay ibibigay mo lamang sa LTO deputized traffic enforcer at hindi sa traffic guide enforcer?",
+            options: ["A. SECTION 29", "B. SECTION 26", "C. SECTION 28"],
+            correct: 0
+        },
+        { //19
+            question: "A student permit cannot be used as a license. This is a violation of RA 4136 SECTION 30. SP is only for ______.",
+            tagalog: "Ang student permit ay hindi pwedeng gamitin bilang isang lisensya. Ito ay paglabag sa RA 4136 SECTION 30. Ang SP ay para lamang sa mga ______?",
+            options: ["A. Sa mga nag nanais matuto mag maneho na may kasamang professional driver.", "B. Sa mga marunong nang mag maneho na walang lisensya.", "C. Sa mga gustong matuto na may kasamang duly accredited driving instructor."],
+            correct: 2
+        },
+        { //20
+            question: "What section of RA 4136 prohibits driving at 20 kilometers per hour in populated areas and intersections?",
+            tagalog: "Anong seksyon ng RA 4136 ang pinagbabawal ang pagpapatakbo ng 20 kilometers per hour sa mga matataong lugar at interseksyon?",
+            options: ["A. SECTION 35b", "B. SECTION 35c", "C. SECTION 35a"],
+            correct: 1
+        },
+        { //21
+            question: "What pedal does a manual transmission have?",
+            tagalog: "Anong pedal mayroon ang isang manual transmission?",
+            options: ["A. CLUTCH AND BRAKE PEDAL", "B. BRAKE AND GAS PEDAL", "C. CLUTCH, BRAKE, AND GAS PEDAL"],
+            correct: 2
+        },
+        { //22
+            question: "How many types of front lights does a modern car have?",
+            tagalog: "Ilang klase ng ilaw mayroon ang isang makabagong kotse sa harapan?",
+            options: ["A. 6", "B. 4", "C. 5"],
+            correct: 0
+        },
+        { //23
+            question: "How many rear lights does a car have?",
+            tagalog: "Ilang ilaw ang mayroon ang isang sasakyan sa likuran?",
+            options: ["A. 7", "B. 5", "C. 6"],
+            correct: 2
+        },
+        { //24
+            question: "When should you use high beam?",
+            tagalog: "Kailan mo dapat gamitin ang high beam?",
+            options: ["A. On the highway with moderate speed and no encounter", "B. Any time I want", "C. When in a crowded street"],
+            correct: 0
+        },
+        { //25
+            question: "What are the things to do before getting into a car?",
+            tagalog: "Ano ang mga bagay na dapat gawin bago sumakay ng kotse?",
+            options: ["A. Walk around and check the physical condition of the vehicle", "B. Get on the car right away", "C. None of the above"],
+            correct: 0
+        },
+        { //26
+            question: "What should be done before lowering the hand brake?",
+            tagalog: "Ano ang dapat gawin bago ibaba ang hand brake?",
+            options: ["A. Step on the clutch", "B. Step on the foot brake first", "C. Step on the gas"],
+            correct: 1
+        },
+        { //27
+            question: "If you're going to refuel, what are the things to remember?",
+            tagalog: "Kung magpapa gasolina, ano yung mga bagay na dapat tandaan?",
+            options: ["A. Turn off the engine and don't use a cellphone", "B. Just leave the engine on", "C. Answer the cellphone while refueling"],
+            correct: 0
+        },
+        { //28
+            question: "What should be done before you start the engine of modern manual cars?",
+            tagalog: "Ano ang dapat gawin bago mo istart ang makina ng mga makabagong manual na sasakyan?",
+            options: ["A. CLUTCH NEUTRAL", "B. CLUTCH GAS NEUTRAL", "C. CLUTCH BRAKE NEUTRAL"],
+            correct: 2
+        },
+        { //29
+            question: "In an automatic transmission, what should be done before I start the car engine?",
+            tagalog: "Sa isang automatic transmission, ano ang dapat gawin bago i-start ang makina ng sasakyan?",
+            options: ["A. STEP ON THE GAS BEFORE STARTING", "B. PUT THE GEAR IN PARK “P” AND STEP ON THE BRAKE", "C. PUT THE GEAR IN PARK “P” AND START"],
+            correct: 1
+        },
+        { //30
+            question: "In an automatic transmission vehicle, what should be done before putting the transmission in reverse?",
+            tagalog: "Sa isang automatic transmission na sasakyan, anong dapat gawin bago ilagay ang kambyo sa reverse?",
+            options: ["A. REVERSE IMMEDIATELY AFTER STEPPING ON THE GAS PEDAL", "B. STEP ON THE BRAKES WELL BEFORE PUTTING THE TRANSMISSION IN REVERSE", "C. STEP ON THE GASOLINE BEFORE PUTTING THE TRANSMISSION IN REVERSE"],
+            correct: 1
+        },
+        { 
+            question: "In an automatic transmission car, before turning off the engine, where should the shifter be placed?", 
+            tagalog: "Sa isang automatic transmission na kotse, bago patayin ang makina, saan dapat ilagay ang kambyo?", 
+            options: ["A. NEUTRAL", "B. DRIVE", "C. PARK"],  
+            correct: 2
+        }, 
+        { 
+            question: "In an automatic transmission car, where should the gear shift be placed when you are in a traffic situation?", 
+            tagalog: "Sa isang automatic transmission na kotse, saan dapat ilagay ang kambyo kapag ikaw ay nasa ma trapik na sitwasyon?", 
+            options: ["A. Put it in neutral so as not to consume fuel", "B. Leave it in drive and raise the hand brake", "C. Leave it in drive and move your right foot to the brake"], 
+            correct: 0 // 32
+        }, 
+        { 
+            question: "In an automatic transmission car, what is the correct way of stepping on the gas pedal?", 
+            tagalog: "Sa isang automatic transmission na kotse, Paano ang tamang pag apak sa gas pedal?", 
+            options: ["A. STEP ON THE GASOLINE SLOWLY", "B. STEP ON THE GAS PEDAL HARD TO AVOID STRAINING THE ENGINE", "C. STEP ON THE GAS PEDAL QUICKLY AND HEAVY"],  
+            correct: 0 // 33
+        }, 
+        { 
+            question: "What will you do if a vehicle in front of you on the left suddenly stops?", 
+            tagalog: "Ano ang iyong gagawin kung ang isang sasakyan sa unahan mo na nasa kaliwa ay biglang huminto?", 
+            options: ["A. Continue driving", "B. Honk your horn until you pass it", "C. Stop as well and assess the situation before proceeding"], 
+            correct: 2 // 34
+        }, 
+        { 
+            question: "What will you do when you are approaching an intersection and a vehicle has already stopped?", 
+            tagalog: "Ano ang iyong gagawin kapag ikaw ay paparating sa isang intersection at mayroon ng isang sasakyan na nauna nang huminto?", 
+            options: ["A. Let the first vehicle that arrived or stopped go first", "B. Race with the other vehicle", "C. Slow down and continue driving"], 
+            correct: 0 // 35
+        }, 
+        { 
+            question: "At an intersection without a stoplight, two vehicles stop at the same time. Which one should go first?", 
+            tagalog: "Sa isang intersection na walang stoplight, may dalawang sasakyan na sabay na tumigil. Alin ang dapat mauna?", 
+            options: ["A. Continue and ignore it", "B. The driver signaling with their right hand should go first", "C. Assert your right of way"], 
+            correct: 1 // 36
+        }, 
+        { 
+            question: "When one vehicle is coming from a private road and the other from a public road, which has the right of way?", 
+            tagalog: "Kapag ang isang sasakyan ay nanggaling sa isang pribadong daan at ang isa naman ay galing sa isang pampublikong daan, alin ang mas may karapatan na mauna?", 
+            options: ["A. Neither of them can go first", "B. The vehicle coming from the private road", "C. The vehicle coming from the public road"], 
+            correct: 2 // 37
+        }, 
+        { 
+            question: "If a vehicle is already inside the yellow box intersection and another is outside, who has the right of way?", 
+            tagalog: "Kapag ang isang sasakyan ay nasa loob na nang yellow box intersection, at ang isa naman ay nasa labas, sino yung mas may karapatan na mauna?", 
+            options: ["A. The one outside the yellow box", "B. The one inside the yellow box", "C. The one signaled by the right hand"],  
+            correct: 1 // 38
+        }, 
+        { 
+            question: "When driving on a road with a double solid yellow line and a white line in the middle, what does this mean?", 
+            tagalog: "Kapag ikaw ay dumadaan sa isang daan na may double solid yellow line na mayroong white line sa gitna, ano ang ibig sabihin nito?",  
+            options: ["A. ABSOLUTE NO OVERTAKING", "B. OVERTAKING ALLOWED", "C. NONE OF THE ABOVE"],  
+            correct: 0 // 39
+        }, 
+        { 
+            question: "While driving, you see a Children Crossing Ahead sign, but no one is crossing. What should you do?", 
+            tagalog: "Habang nagmamaneho, mayroon kang nakitang “Children Crossing Ahead” sign ngunit wala ka naming nakitang tao na tumatawid. Ano ang dapat mong gawin?", 
+            options: ["A. CONTINUE DRIVING SINCE NO ONE IS CROSSING", "B. PRESS THE GAS PEDAL TO PASS QUICKLY", "C. SLOW DOWN AND LOOK AROUND TO SEE IF SOMEONE MIGHT CROSS"],  
+            correct: 2 // 40
+        },
+        ////////////////////////////////////////////////////////////////////////////
+{
+    question: "IDENTIFICATION: What does the first letter B in BLOWBAGETS stand for?",
+    tagalog: "Ano ang kahulugan ng unang letra B sa BLOWBAGETS?",
+    options: [""],
+    correct: 0  // 41
+},
+
+{
+    question: "IDENTIFICATION: What does the letter L in BLOWBAGETS stand for?",
+    tagalog: "Ano ang kahulugan ng letrang L sa BLOWBAGETS?",
+    options: [""],
+    correct: 0  // 42
+},
+{
+    question: "IDENTIFICATION: What does the letter O in BLOWBAGETS stand for?",
+    tagalog: "Ano ang kahulugan ng letrang O sa BLOWBAGETS?",
+    options: [""],
+    correct: 0  // 43
+},
+{
+    question: "IDENTIFICATION: What does the letter W in BLOWBAGETS stand for?",
+    tagalog: "Ano ang kahulugan ng letrang W sa BLOWBAGETS?",
+    options: [""],
+    correct: 0  // 44
+},
+{
+    question: "IDENTIFICATION: What does the letter B in BLOWBAGETS (second B) stand for?",
+    tagalog: "Ano ang kahulugan ng pangalawang B sa BLOWBAGETS?",
+    options: [""],
+    correct: 0  // 45
+},
+{
+    question: "IDENTIFICATION: What does the letter A in BLOWBAGETS stand for?",
+    tagalog: "Ano ang kahulugan ng letrang A sa BLOWBAGETS?",
+    options: [""],
+    correct: 0  // 46
+},
+{
+    question: "IDENTIFICATION: What does the letter G in BLOWBAGETS stand for?",
+    tagalog: "Ano ang kahulugan ng letrang G sa BLOWBAGETS?",
+    options: [""],
+    correct: 0  // 47
+},
+{
+    question: "IDENTIFICATION: What does the letter E in BLOWBAGETS stand for?",
+    tagalog: "Ano ang kahulugan ng letrang E sa BLOWBAGETS?",
+    options: [""],
+    correct: 0 // 48
+},
+{
+    question: "IDENTIFICATION: What does the letter T in BLOWBAGETS stand for?",
+    tagalog: "Ano ang kahulugan ng letrang T sa BLOWBAGETS?",
+    options: [""],
+    correct: 0 // 49
+},
+{
+    question: "IDENTIFICATION: What does the letter S in BLOWBAGETS stand for?",
+    tagalog: "Ano ang kahulugan ng letrang S sa BLOWBAGETS?",
+    options: [""],
+    correct: 0  // 50
+},
+
+        { //51
+            question: "IDENTIFICATION: Provide the meaning Republic Act. 10586", 
+            tagalog: "Ilagay ang kahulugan ng  Republic Act. 10586", 
+            options: [""], 
+            correct: 0 
+        },
+        { //52
+            question: "IDENTIFICATION: Provide the meaning Republic Act. 10913", 
+            tagalog: "Ilagay ang kahulugan ng  Republic Act. 10913", 
+            options: [""], 
+            correct: 0 
+        },
+        { //53
+            question: "IDENTIFICATION: Provide the meaning Republic Act. 8750", 
+            tagalog: "Ilagay ang kahulugan ng  Republic Act. 8750",  
+            options: [""], 
+            correct: 0 
+        },
+        { //54
+            question: "IDENTIFICATION: Provide the meaning Republic Act. 11229", 
+            tagalog: "Ilagay ang kahulugan ng  Republic Act. 11229",  
+            options: [""], 
+            correct: 0 
+        },
+        { //55
+            question: "IDENTIFICATION: Provide the meaning Republic Act. 4136", 
+            tagalog: "Ilagay ang kahulugan ng  Republic Act. 4136", 
+            options: [""], 
+            correct: 0 
+        },
+        { //56
+            question: "IDENTIFICATION: Provide the meaning Republic Act. 8749", 
+            tagalog: "Ilagay ang kahulugan ng  Republic Act. 8749",  
+            options: [""], 
+            correct: 0 
+        },
+        { //57
+            question: "IDENTIFICATION: Provide the meaning Republic Act. 8794", 
+            tagalog: "Ilagay ang kahulugan ng  Republic Act. 8794",  
+            options: [""], 
+            correct: 0 
+        },
+        { //58
+            question: "IDENTIFICATION: Provide the meaning Republic Act. 10666", 
+            tagalog: "Ilagay ang kahulugan ng  Republic Act. 10666",   
+            options: [""], 
+            correct: 0 
+        },
+        { //59
+            question: "IDENTIFICATION: Provide the meaning Republic Act. 11235", 
+            tagalog: "Ilagay ang kahulugan ng  Republic Act.", 
+            options: [""], 
+            correct: 0 
+        },
+        { //60
+            question: "IDENTIFICATION: Provide the meaning Republic Act. 10916", 
+            tagalog: "Ilagay ang kahulugan ng  Republic Act. 10916", 
+            options: [""], 
+            correct: 0 
+        },
+        { //61
+            question: "ROAD SIGNS: Regulatory signs that, when ignored, will result in a demerit.", 
+            tagalog: "Mga regulasyong karatula na kapag hindi sinunod, magbibigay ng demerit.", 
+            image: "images/no parking.png", 
+            options: [""],  
+            correct: 0 
+        },
+
+        { //62
+            question: "ROAD SIGNS: Regulatory signs that, when ignored, will result in a demerit.", 
+            tagalog: "Mga regulasyong karatula na kapag hindi sinunod, magbibigay ng demerit.", 
+            image: "images/no right turn.png", 
+            options: [""], 
+            correct: 0 
+        },
+
+        { //63
+            question: "ROAD SIGNS: Regulatory signs that, when ignored, will result in a demerit.", 
+            tagalog: "Mga regulasyong karatula na kapag hindi sinunod, magbibigay ng demerit.", 
+            image: "images/no left turn.png", 
+            options: [""], 
+            correct: 0 
+        },
+
+        { //64
+            question: "ROAD SIGNS: You are instructed to slow down. What sign is this?", 
+            tagalog: "Inuutusan kang magbagal. Anong karatula ito?", 
+            image: "images/Pedestrian crossing.png", 
+            options: [""], 
+            correct: 0 
+        },
+
+        { //65
+            question: "ROAD SIGNS: You are instructed to slow down. What sign is this?", 
+            tagalog: "Inuutusan kang magbagal. Anong karatula ito?", 
+            image: "images/merging traffic.png", 
+            options: [""], 
+            correct: 0 
+        },
+
+        { //66
+            question: "ROAD SIGNS: You are instructed to slow down. What sign is this?", 
+            tagalog: "Inuutusan kang magbagal. Anong karatula ito?", 
+            image: "images/traffic light.png", 
+            options: [""], 
+            correct: 0 
+        },
+
+        { //67
+            question: "ROAD SIGNS: You are instructed to slow down. What sign is this?", 
+            tagalog: "Inuutusan kang magbagal. Anong karatula ito?", 
+            image: "images/roundabout.png", 
+            options: [""], 
+            correct: 0 
+        },
+
+        { //
+            question: "ROAD SIGNS: You are instructed to slow down. What sign is this?", 
+            tagalog: "Inuutusan kang magbagal. Anong karatula ito?", 
+            image: "images/crossing ahead.png", 
+            options: [""], 
+            correct: 0 
+        },
+
+        { //
+            question: "ROAD SIGNS: You are instructed to slow down for safety reasons.", 
+            tagalog: "Inuutusan kang magbagal para sa kaligtasan.", 
+            image: "images/narrow bridge.png", 
+            options: [""], 
+            correct: 0 
+        },
+
+        { //
+            question: "ROAD SIGNS: You are instructed to slow down for safety reasons.", 
+            tagalog: "Inuutusan kang magbagal para sa kaligtasan.", 
+            image: "images/narrow road.png", 
+            options: [""], 
+            correct: 0  
+        },
+                { //
+            question: "You are instructed to slow down for safety reasons.",
+            tagalog: "Inuutusan kang magbagal para sa kaligtasan.", 
+            image: "images/t junction.png", 
+            options: [""], 
+            correct: 0  
+        },
+
+        { //
+            question: "You are instructed to slow down for safety reasons.",
+            tagalog: "Inuutusan kang magbagal para sa kaligtasan.", 
+            image: "images/y junction.png", 
+            options: [""], 
+            correct: 0 
+        },
+
+        { //
+            question: "You are instructed to slow down for safety reasons.",
+            tagalog: "Inuutusan kang magbagal para sa kaligtasan.", 
+            image: "images/no overtaking.png", 
+            options: [""], 
+            correct: 0  
+        },
+
+        { //
+            question: "You are instructed to slow down. What sign is this?",
+            tagalog: "Inuutusan kang magbagal. Anong karatula ito?", 
+            image: "images/slippery road.png", 
+            options: [""], 
+            correct: 0 
+        },
+
+        { //
+            question: "You are instructed to slow down. What sign is this?",
+            tagalog: "Inuutusan kang magbagal. Anong karatula ito?", 
+            image: "images/left curve.png", 
+            options: [""], 
+            correct: 0  
+        },
+
+        { //
+            question: "You are instructed to slow down. What sign is this?",
+            tagalog: "Inuutusan kang magbagal. Anong karatula ito?", 
+            image: "images/railroad crossing.png", 
+            options: [""], 
+            correct: 0 
+        },
+
+        { //
+            question: "You are instructed to slow down. What sign is this?",
+            tagalog: "Inuutusan kang magbagal. Anong karatula ito?", 
+            image: "images/right curve.png", 
+            options: [""], 
+            correct: 0  
+        },
+
+        { //
+            question: "Regulatory signs that, when ignored, will result in a demerit.",
+            tagalog: "Mga regulasyong senyas na kapag hindi sinunod, magbibigay ng demerit.", 
+            image: "images/no uturn.png", 
+            options: [""], 
+            correct: 0 
+        },
+
+        { //
+            question: "Regulatory signs that, when ignored, will result in a demerit.",
+            tagalog: "Mga regulasyong senyas na kapag hindi sinunod, magbibigay ng demerit.", 
+            image: "images/children crossing ahead.png", 
+            options: [""], 
+            correct: 0 
+        },
+        { //
+            question: "This is commonly seen on expressways. What sign is this?",
+            tagalog: "Madalas itong makita sa mga expressway. Anong senyas ito?", 
+            image: "images/no stopping anytime.png", // Add image path if available
+            options: [""], 
+            correct: 0  
+        },
+                { // 81
+            question: "ROAD MARKINGS: This wakes up drowsy drivers. What is this?", 
+            tagalog: "Ginising nito ang mga inaantok na driver. Ano ito?", 
+            image: "images/rumble strips.png", 
+            options: [""], 
+            correct: 0  
+        },
+        { // 82
+            question: "ROAD MARKINGS: What actions are prohibited when you are on this line?", 
+            tagalog: "Anong mga aksyon ang ipinagbabawal kapag ikaw ay nasa linyang ito?", 
+            image: "images/no overtaking-left-uturn.png", 
+            options: [""],  
+            correct: 0  
+        },
+        { // 83
+            question: "ROAD MARKINGS: What actions are prohibited when you are on this line?", 
+            tagalog: "Anong mga aksyon ang ipinagbabawal kapag ikaw ay nasa linyang ito?", 
+            image: "images/single solid yellow.png", 
+            options: [""], 
+            correct: 0  
+        },
+        { // 84
+            question: "ROAD MARKINGS: What actions are prohibited when you are on this line?", 
+            tagalog: "Anong mga aksyon ang ipinagbabawal kapag ikaw ay nasa linyang ito?", 
+            image: "images/center line.png", 
+            options: [""],  
+            correct: 0 
+        },
+        { // 85
+            question: "ROAD MARKINGS: What are you allowed to do when you are on this line?", 
+            tagalog: "Ano ang maaari mong gawin kapag ikaw ay nasa linyang ito?", 
+            image: "images/broken white lane.png", 
+            options: [""], 
+            correct: 0  
+        },
+        { // 86
+            question: "ROAD MARKINGS: What is the name of this line?", 
+            tagalog: "Ano ang tawag sa linyang ito?", 
+            image: "images/stop line.png", 
+            options: [""], 
+            correct: 0 
+        },
+        { // 87
+            question: "ROAD MARKINGS: What is the name of this line?", 
+            tagalog: "Ano ang tawag sa linyang ito?", 
+            image: "images/pedestrian line.png", 
+            options: [""], 
+            correct: 0 
+        },
+        { // 88
+            question: "ROAD MARKINGS: What is the name of this line?", 
+            tagalog: "Ano ang tawag sa linyang ito?", 
+            image: "images/do not block intersection.png", 
+            options: [""],  
+            correct: 0  
+        },
+        { // 89
+            question: "ROAD MARKINGS: What is the name of this line?", 
+            tagalog: "Ano ang tawag sa linyang ito?", 
+            image: "images/bicycle lane.png", 
+            options: [""], 
+            correct: 0 
+        },
+        { // 90
+            question: "ROAD MARKINGS: What is the meaning of this line?", 
+            tagalog: "Ano ang ibig sabihin ng linyang ito?", 
+            image: "images/absolute no overtaking.png", 
+            options: [""], 
+            correct: 0  
+        },
+        { // 91
+            question: "91-100ESSAY WRITING: Choose one R.A. (Republic Act) that you like the most and explain why.?(atleast 20 words)", 
+            tagalog: "Pumili ng isang R.A. na pinakagusto mo at isulat kung bakit?", 
+            image: "", 
+            options: [""], 
+            correct: 0 
+        },
+
+
+    ];
+
+    const setTwoQuestions = [
+       {    //   //1
+    question: "What should you prepare for a long trip?",
+    tagalog: "Ano ang mga dapat mong iahanda kung mahaba ang byahe?",
+    options: [
+        "A. Plan the route and condition the vehicle.",
+        "B. Prepare vehicle repair tools in case of breakdown.",
+        "C. All answers are correct."
+    ],
+    correct: 0
+},
+{   //2
+    question: "What should you do if a passenger wants to get off?",
+    tagalog: "Ano ang dapat mong gawin kung may pasahero na gustong bumaba?",
+    options: [
+        "A. Tell them to hurry up to avoid delaying other passengers.",
+        "B. Remind them to be careful when getting off.",
+        "C. All answers are correct."
+    ],
+    correct: 0
+},
+{   //3
+    question: "At an intersection with no traffic signals, two vehicles arrive. Which vehicle has the right of way?",
+    tagalog: "Sa isang intersekyon na walang nakatalagang senyas trapiko, dalawang sasakyan ang dumarating. Aling sasakyan ang may Karapatan sa daan?",
+    options: [
+        "A. The vehicle that slowed down first.",
+        "B. The vehicle coming from the right.",
+        "C. The vehicle coming from the left."
+    ],
+    correct: 0
+},
+{   //4
+    question: "What should you do when approaching a curve?",
+    tagalog: "Kung parating ka sa isang kurbada, ano ang dapat mong gawin?",
+    options: [
+        "A. Speed up while on the curve.",
+        "B. Slow down before reaching the curve.",
+        "C. Brake suddenly while driving on the curve."
+    ],
+    correct: 0
+},
+{    //   //5
+    question: "When a motorcyclist plans to turn right or left, he/she should use his/her signal light",
+    tagalog: "Sa naka motorsiklo na may balak lumiko pakanan o pakaliwa, dapat lang na gumamit ng signal light.",
+    options: [
+        "A. Use their foot.",
+        "B. Correct.",
+        "C. Incorrect."
+    ],
+    correct: 0
+},
+
+{   //6
+    question: "What does a red traffic light mean?",
+    tagalog: "Ano ang kahulugan ng kulay pulang ilaw trapiko?",
+    options: [
+        "A. Stop and wait for the green light.",
+        "B. Drive slowly and proceed if safe.",
+        "C. Continue driving."
+    ],
+    correct: 0
+},
+{   //7
+    question: "Having a license is a:",
+    tagalog: "Ang pagkakaroon ng lisensya ay isang:",
+    options: [
+        "A. Right.",
+        "B. Honor.",
+        "C. Privilege."
+    ],
+    correct: 0
+},
+{   //8
+    question: "Where are you not allowed to overtake?",
+    tagalog: "Saang lugar ka hindi maaaring lumusot (overtake)?",
+    options: [
+        "A. At the foot of a bridge.",
+        "B. All answers are correct.",
+        "C. At intersections."
+    ],
+    correct: 0
+},
+{   //9
+    question: "What is the safest rule, even if you have the right of way?",
+    tagalog: "Ang pinaka ligtas na alituntunin kahit ikaw ang may Karapatan sa daan ay:",
+    options: [
+        "A. Do not insist on your right of way.",
+        "B. Honk your horn.",
+        "C. Always insist on your right of way."
+    ],
+    correct: 0
+},
+{   //10
+    question: "If the brake lights of the vehicle in front of you light up:",
+    tagalog: "Kung umilaw ang breaklights ng sasakyang nasa inyong unahan:",
+    options: [
+        "A. Speed up.",
+        "B. Step on the brakes immediately.",
+        "C. Be ready to brake."
+    ],
+    correct: 0
+},
+{    //11
+    question: "On a highway, if you want to drive slower than others, where should you go?",
+    tagalog: "Sa highway kung nais mong magpabagal ng takbo kaysa sa iba, dapat kaung gumawi sa:",
+    options: [
+        "A. The center of the road.",
+        "B. The far right side of the road.",
+        "C. The far left side of the road."
+    ],
+    correct: 0
+},
+{    //12
+    question: "Why shouldn't you overtake at the foot of a bridge?",
+    tagalog: "Hindi dapat lumusot (overtake) sa paanan ng tulay sapagkat:",
+    options: [
+        "A. Pedestrians might be crossing.",
+        "B. Oncoming vehicles are not visible.",
+        "C. The road is narrow."
+    ],
+    correct: 0
+},
+{    //13
+    question: "At an intersection with no traffic signals, two vehicles arrive from different streets. Which vehicle should give way?",
+    tagalog: "Sa isang intersection na walang nakatalagang senyas trapiko, dalawang sasakyan ang dumarating mula sa magkaibang kalye, aling sasakyan ang dapat magbigay?",
+    options: [
+        "A. The one that arrived last.",
+        "B. The one that arrived first.",
+        "C. The one that slowed down first."
+    ],
+    correct: 0
+},
+{    //14
+    question: "Why is a left turn dangerous?",
+    tagalog: "Mapanganib ang palikong kaliwa sa kanan sapagkat:",
+    options: [
+        "A. You need to be alert for vehicles from the left, right, and oncoming traffic.",
+        "B. Vehicles from the left, right, and oncoming traffic are fast."
+    ],
+    correct: 0
+},
+{    //15
+    question: "What does a flashing yellow traffic light mean?",
+    tagalog: "Ano ang kahulugan ng patay sinding dilaw na ilaw ng trapiko?",
+    options: [
+        "A. Stop and wait for the light to change.",
+        "B. Wait for the green light.",
+        "C. Slow down and proceed if there is no danger."
+    ],
+    correct: 0
+},
+
+{    //16
+    question: "What does a blue road sign mean?",
+    tagalog: "Ano ang kahulugan ng karatulang pangkalsada na kulay asul?",
+    options: [
+        "A. Provides information.",
+        "B. Gives a warning.",
+        "C. Regulates."
+    ],
+    correct: 0
+},
+{    //17
+    question: "What does a triangular-shaped road sign mean?",
+    tagalog: "Ano ang kahulugan ng karatulang pangkalsada na tatsulok ang hugis?",
+    options: [
+        "A. Provides information.",
+        "B. Regulates.",
+        "C. Gives a warning."
+    ],
+    correct: 0
+},
+{    //18
+    question: "What is the speed limit in a school zone?",
+    tagalog: "Ano ang takdang tulin ng isang sasakyan sa lugar ng paaralan?",
+    options: [
+        "A. 30 kph.",
+        "B. 20 kph.",
+        "C. 25 kph."
+    ],
+    correct: 0
+},
+{    //19
+    question: "When should you signal before turning right or left at an intersection?",
+    tagalog: "Kailangan magbigay ng senyas kung kakanan o kakaliwa sa daratnang intersekyon sa layong:",
+    options: [
+        "A. 60m.",
+        "B. 15m.",
+        "C. 30m."
+    ],
+    correct: 0
+},
+{    //20
+    question: "When changing lanes, you should signal, check your rearview mirror, and:",
+    tagalog: "Sa tuwing lilipat ng linya, dapat sumenyas, tignan ang iyong “rear” view mirror at:",
+    options: [
+        "A. Turn on your headlights.",
+        "B. Honk your horn.",
+        "C. Check for oncoming vehicles."
+    ],
+    correct: 0
+},
+{    //21
+    question: "What does a broken white line indicate?",
+    tagalog: "Ang puting linya na putol-putol ay palatandaan na:",
+    options: [
+        "A. You may pass left or right if safe.",
+        "B. Overtaking to the left is prohibited.",
+        "C. Overtaking to the right is prohibited."
+    ],
+    correct: 0
+},
+{    //22
+    question: "When parking uphill with a curb, you should turn the wheels:",
+    tagalog: "Kung paparada ng paahon sa may bangketa, dapat mong ipihit ang gulong:",
+    options: [
+        "A. Toward the curb.",
+        "B. Away from the curb.",
+        "C. In any direction."
+    ],
+    correct: 0
+},
+{    //23
+    question: "What does a continuous yellow line mean?",
+    tagalog: "Ano ang kahulugan ng tuloy-yuloy na guhit na kulay dilaw?",
+    options: [
+        "A. No overtaking allowed.",
+        "B. Overtaking is allowed.",
+        "C. All answers are correct."
+    ],
+    correct: 0
+},
+{    //24
+    question: "Ignoring traffic lights can:",
+    tagalog: "Ang hindi pagpansin sa ilaw trapiko ay:",
+    options: [
+        "A. Save fuel.",
+        "B. Show that you are a skilled driver.",
+        "C. Lead to accidents or danger."
+    ],
+    correct: 0
+},
+{    //25
+    question: "In a roundabout, who has the right of way?",
+    tagalog: "Sa mga rotonda, alin ang may karapatan sa daan?",
+    options: [
+        "A. Vehicles facing the green light.",
+        "B. Vehicles already in the roundabout.",
+        "C. Vehicles entering the roundabout."
+    ],
+    correct: 0
+},
+{    //26
+    question: "If you are caught for a violation, how many days are you given to settle the case?",
+    tagalog: "Kung ikaw ay nahuli, ilang araw ang palugit upang maayos ang iyong kaso?",
+    options: [
+        "A. 15 days.",
+        "B. 30 days.",
+        "C. 10 days."
+    ],
+    correct: 0
+},
+{    //27
+    question: "At an intersection with a 'STOP SIGN,' you should:",
+    tagalog: "Sa isang intersekyon na may 'STOP SIGN' dapat kang:",
+    options: [
+        "A. Yield to vehicles from the left or right and proceed if safe.",
+        "B. Slow down and proceed if safe.",
+        "C. Stop and proceed if safe."
+    ],
+    correct: 0
+},
+{    //28
+    question: "Overtaking is prohibited at the foot of a bridge because:",
+    tagalog: "Ipinagbabawal ang paglusot (overtake) sa paanan ng tulay sapagkat:",
+    options: [
+        "A. The bridge is narrow.",
+        "B. There are pedestrians crossing.",
+        "C. It is dangerous and oncoming vehicles are not visible."
+    ],
+    correct: 0
+},
+{    //29
+    question: "What does two broken yellow lines indicate?",
+    tagalog: "Ang dalawang dilaw na linya na putol-putol ay palatandaan na:",
+    options: [
+        "A. Overtaking to the left is prohibited.",
+        "B. You may pass left or right if safe.",
+        "C. Overtaking to the right is prohibited."
+    ],
+    correct: 0
+},
+{    //30
+    question: "Why is a left turn more dangerous than a right turn?",
+    tagalog: "Mapanganib ang likong pakaliwa kaysa pakanan sapagkat:",
+    options: [
+        "A. There are traffic lights to the left.",
+        "B. There are fewer vehicles from the right.",
+        "C. Vehicles coming from the left, right, and opposite are usually moving fast."
+    ],
+    correct: 0
+},
+{    //31
+    question: "What does a circular blue and white road sign mean?",
+    tagalog: "Ano ang kahulugan ng  karatulang pangkalsada na asul at puti na pabilog ang hugis?",
+    options: [
+        "A. Provides direction and information.",
+        "B. Sets a rule or requirement.",
+        "C. Gives a warning."
+    ],
+    correct: 0
+},
+{    //32
+    question: "For a long trip, what should you do?",
+    tagalog: "Kung malayo ang byahe, kailangan mong:",
+    options: [
+        "A. All answers are correct.",
+        "B. Prepare tools for vehicle repair in case of breakdown.",
+        "C. Plan the route and check the condition of the vehicle."
+    ],
+    correct: 0
+},
+{    //33
+    question: "Where are you not allowed to park?",
+    tagalog: "Saang lugar hindi maaari pumarada?",
+    options: [
+        "A. Pedestrian crossing.",
+        "B. A driveway.",
+        "C. Designated parking areas."
+    ],
+    correct: 0
+},
+{    //34
+    question: "When driving slowly on an expressway, you should move to:",
+    tagalog: "Kung nagpapatakbo ng mabagal sa 'expressway', dapat kang gumawi sa:",
+    options: [
+        "A. The far left lane.",
+        "B. The far right lane.",
+        "C. The middle lane."
+    ],
+    correct: 0
+},
+{    //35
+    question: "If the driver in front of you extends their left arm straight out, what are they indicating?",
+    tagalog: "Kung ang driver ng sasakyang nasa unahan mo ay maglalabas ng kanyang kaliwang kamay at inunat ito, nakakatiyak ka na siya ay:",
+    options: [
+        "A. Turning right.",
+        "B. Stopping.",
+        "C. Turning left."
+    ],
+    correct: 0
+},
+{    //36
+    question: "What is the purpose of using a horn?",
+    tagalog: "Ang busina ay ginagamit upang:",
+    options: [
+        "A. Create noise.",
+        "B. Provide a safety warning.",
+        "C. Show off the sound of the horn."
+    ],
+    correct: 0
+},
+{    //37
+    question: "What should you do to fight fatigue and drowsiness during a long trip?",
+    tagalog: "Ano ang dapat mong gawin para malabanan ang pagod at antok sa haba ng byahe?",
+    options: [
+        "A. Stop occasionally and rest.",
+        "B. Drink alcohol before driving.",
+        "C. Take anti-drowsiness medication."
+    ],
+    correct: 0
+},
+{    //38
+    question: "According to the law, you cannot drive fast unless:",
+    tagalog: "Ayon sa batas, hindi ka maaaring magmaneho ng matulin maliban kung:",
+    options: [
+        "A. It is within the speed limit.",
+        "B. There is no danger.",
+        "C. All answers are correct."
+    ],
+    correct: 0
+},
+{    //39
+    question: "Not following traffic lights can:",
+    tagalog: "Ang hindi pagsunod sa ilaw trapiko ay:",
+    options: [
+        "A. Prove that you're a good driver.",
+        "B. Get you into an accident.",
+        "C. Save gasoline."
+    ],
+    correct: 0
+},
+{    //40
+    question: "If you are involved in an accident, you must report it to the nearest police station:",
+    tagalog: "Kung nasasangkot sa isang sakuna, dapat itong ipagbigay-alam sa pinaka malapit na himpilan ng polisya:",
+    options: [
+        "A. Within 72 hours.",
+        "B. Immediately.",
+        "C. Within 48 hours."
+    ],
+    correct: 0
+},
+{    //41
+    question: "What do the two continuous yellow lines indicate?",
+    tagalog: "Ang dalawang dilaw na linya na tuloy-tuloy ay palatandaan na:",
+    options: [
+        "A. You can overtake to the right.",
+        "B. You can overtake to the left.",
+        "C. Overtaking is prohibited at all times."
+    ],
+    correct: 0
+},
+{    //42
+    question: "If there are pedestrians crossing at a school crossing, what should you do?",
+    tagalog: "Kung may tumatawid sa may tawirang pang paaralan, ano ang dapat mong gawin?",
+    options: [
+        "A. Stop and do not proceed while people are crossing.",
+        "B. Stop and let the students cross.",
+        "C. Yield to those crossing from the right."
+    ],
+    correct: 0
+},
+{    //43
+    question: "After overtaking, how can you safely return to your original lane?",
+    tagalog: "Matapos kang lumagpas (overtake) at nais mong bumalik sa pinanggalingang linya ng ligtas, kailangan:",
+    options: [
+        "A. See the vehicle you overtook in your rearview mirror.",
+        "B. Stop.",
+        "C. Look back at the vehicle you overtook."
+    ],
+    correct: 0
+},
+{    //44
+    question: "If the driver in front of you extends their left hand pointing upward, they intend to:",
+    tagalog: "Kung ang driver ng sasakyang nasa unahan mo ay naglabas ng kaliwang kamay na nakaturo sa itaas, siya ay:",
+    options: [
+        "A. Turn left.",
+        "B. Stop.",
+        "C. Turn right."
+    ],
+    correct: 0
+},
+{    //45
+    question: "When can you overtake on the right side of a vehicle?",
+    tagalog: "Maaari kang lumusot (overtake) sa kanang bahagi ng isang sasakyan kung:",
+    options: [
+        "A. The road is a two-way street.",
+        "B. The sidewalk is wide.",
+        "C. The highway has two or more lanes going in one direction."
+    ],
+    correct: 0
+},
+{    //46
+    question: "The safe guideline, even if you are certain that you have the right of way, is:",
+    tagalog: "Ang ligtas na alituntunin kahit nakatitiyak na ikaw ang may Karapatan sa daan ay:",
+    options: [
+        "A. Insist on your right of way.",
+        "B. Do not insist on your right of way.",
+        "C. Honk your horn."
+    ],
+    correct: 0
+},
+{    //47
+    question: "What does a blue and white traffic sign in a rectangular or square shape indicate?",
+    tagalog: "Ano ang kahulugan ng senyas trapiko na kulay asul at puti na parihaba o parisukat ang hugis?",
+    options: [
+        "A. Gives a warning.",
+        "B. Directs.",
+        "C. Provides information."
+    ],
+    correct: 0
+},
+{    //48
+    question: "When should a driver make a decision?",
+    tagalog: "Kailan dapat magdesisyon ang isang driver?",
+    options: [
+        "A. While driving.",
+        "B. When traffic is congested.",
+        "C. When they are already skilled at driving."
+    ],
+    correct: 0
+},
+{    //49
+    question: "What does a continuous yellow line indicate?",
+    tagalog: "Ang dilaw na linyang tuloy-tuloy ay palatandaan na:",
+    options: [
+        "A. Overtaking on the left is prohibited.",
+        "B. Overtaking on the right is prohibited.",
+        "C. Overtaking on the left or right is allowed."
+    ],
+    correct: 0
+},
+{    //50
+    question: "What should you do when approaching a curve?",
+    tagalog: "Ano ang dapat mong gawin kung parating na sa isang kurbada?",
+    options: [
+        "A. Speed up while in the curve.",
+        "B. Brake suddenly while driving.",
+        "C. Slow down before reaching the curve."
+    ],
+    correct: 0
+},
+{    //51
+    question: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/slippery road.png",
+    options: [
+        "A. Bumpy road.",
+        "B. Slippery road.",
+        "C. Steep road."
+    ],
+    correct: 0
+},
+{    //52
+    question: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/speedlimit.png",
+    options: [
+        "A. Designated length for vehicles to pass.",
+        "B. Designated speed limit for vehicles.",
+        "C. The distance to the next intersection is 30 km."
+    ],
+    correct: 0
+},
+{    //53
+    question: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/no overtaking.png",
+    options: [
+        "A. No entry.",
+        "B. No parking.",
+        "C. No overtaking."
+    ],
+    correct: 0
+},
+{    //54
+    question: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/no right turn.png",
+    options: [
+        "A. No right turn.",
+        "B. No U-turn.",
+        "C. No overtaking."
+    ],
+    correct: 0
+},
+{    //55
+    question: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/no entry.png",
+    options: [
+        "A. Stop.",
+        "B. No entry for all vehicles.",
+        "C. Yield."
+    ],
+    correct: 0
+},
+{    //56
+    question: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/dangerous left curve.png",
+    options: [
+        "A. Dangerous curve to the right.",
+        "B. Dangerous curve to the left.",
+        "C. Dangerous curve ahead."
+    ],
+    correct: 0
+},
+{    //57
+    question: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/no jeepney allowed.jpg",
+    options: [
+        "A. No entry for jeepneys.",
+        "B. No entry for cars.",
+        "C. No entry for buses."
+    ],
+    correct: 0
+},
+{    //58
+    question: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/stop sign.png",
+    options: [
+        "A. Yield.",
+        "B. Stop.",
+        "C. No entry."
+    ],
+    correct: 0
+},
+{    //59
+    question: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/give way.png",
+    options: [
+        "A. Yield.",
+        "B. Stop.",
+        "C. No entry."
+    ],
+    correct: 0
+},
+{    //60
+    question: "Which of the following is depicted?",
+    tagalog: "Alin sa mga sumusunod ang nakalarawan?",
+    image: "images/river.png",
+    options: [
+        "A. Steep road.",
+        "B. River.",
+        "C. No entry."
+    ],
+    correct: 0
+}
+    ];
+
+
+    let state = {
+      step: 'menu',
+      score: 0,
+      index: 0,
+      selected: null,
+      answered: false,
+      currentCategory: null,
+      questions: [],
+      timer: 30,
+      timerInterval: null
+    };
+
+    function renderMenu() {
+      const html = `
+        <h2>PDC 4w Final Exam</h2>
+        <div class="categories">
+          ${categories.map(cat => `
+            <button class="category-btn" onclick='startCategory(${JSON.stringify(cat)})'>${cat.name.toUpperCase()}</button>
+          `).join('')}
+        </div>
+      `;
+      document.getElementById('app').innerHTML = html;
+    }
+
+    function startCategory(cat) {
+      const questions = cat.name === "Set One (100 items)" ? setOneQuestions :
+                        cat.name === "Set Two (60) items)" ? setTwoQuestions :
+                        [];
+      const tagalog = cat.name === "Set One (100 items)" ? setOneQuestions :
+                      cat.name === "Set Two (60) items)" ? setTwoQuestions :
+                        [];
+
+      state = {
+        ...state,
+        step: 'quiz',
+        score: 0,
+        index: 0,
+        selected: null,
+        answered: false,
+        currentCategory: cat,
+        questions,
+        timer: 25
+      };
+      renderQuiz();
+      startTimer();
+    }
+
+    function handleAnswer(i) {
+      if (state.answered) return;
+      state.selected = i;
+      state.answered = true;
+      clearInterval(state.timerInterval);
+      renderQuiz();
+    }
+
+    function nextQuestion() {
+      clearInterval(state.timerInterval);
+      if (state.index + 1 < state.questions.length) {
+        state.index++;
+        state.selected = null;
+        state.answered = false;
+        state.timer = 25;
+        renderQuiz();
+        startTimer();
+      } else {
+        renderResult();
+      }
+    }
+
+function renderQuiz(showTimeout = false) {
+  const q = state.questions[state.index];
+  const html = `
+    <h3>Question ${state.index + 1} / ${state.questions.length}</h3>
+    <p>${q.question}</p>
+    <p style="font-size: .8rem;">${q.tagalog}</p>
+    ${state.currentCategory.hasImages && q.image ? `<img src="${q.image}" class="responsive-img" alt="Question visual" />` : ''}
+
+    ${q.options.map((opt, i) => `
+      <button class="option-btn" onclick='handleAnswer(${i})' ${state.answered ? 'disabled' : ''}>
+        ${opt}
+      </button>
+    `).join('')}
+
+    <div style="margin-top: 20px; font-size: .5rem;">
+      <div class="timer">Time left: ${state.timer}s</div>
+    </div>
+
+    <div style="margin-top: 10px; font-size: .8rem;">
+      <label for="goToSelect"><strong>Go to Question:</strong></label>
+      <select id="goToSelect" onchange="goToQuestion(this.value)">
+        ${state.questions.map((_, idx) => `
+          <option value="${idx}" ${idx === state.index ? 'selected' : ''}>${idx + 1}</option>
+        `).join('')}
+      </select>
+    </div>
+
+    <div style="margin-top: 20px;">
+      ${state.index > 0 ? `<button class="action-btn" onclick="prevQuestion()">Previous</button>` : ''}
+      ${state.index < state.questions.length - 1 ? `<button class="action-btn" onclick="nextQuestion()">Next</button>` : ''}
+    </div>
+
+    ${showTimeout ? `<p style="color: red;"><em>Time's up! Moving to next question...</em></p>` : ''}
+  `;
+  document.getElementById('app').innerHTML = html;
+}
+function goToQuestion(index) {
+  clearInterval(state.timerInterval);
+  state.index = parseInt(index);
+  state.selected = null;
+  state.answered = false;
+  state.timer = 30;
+  renderQuiz();
+  startTimer();
+}
+
+function prevQuestion() {
+  if (state.index > 0) {
+    clearInterval(state.timerInterval);
+    state.index--;
+    state.selected = null;
+    state.answered = false;
+    state.timer = 30;
+    renderQuiz();
+    startTimer();
+  }
+}
+
+    function renderResult() {
+      const html = `
+        <h2>${state.currentCategory.name.toUpperCase()}</h2>
+        <p>We hope you passed!</p>
+        <button class="action-btn" onclick="renderMenu()">Back to Category</button>
+      `;
+      document.getElementById('app').innerHTML = html;
+    }
+
+    function startTimer() {
+      state.timer = 30;
+      clearInterval(state.timerInterval);
+      state.timerInterval = setInterval(() => {
+        state.timer--;
+        if (state.timer <= 0) {
+          clearInterval(state.timerInterval);
+          state.selected = null;
+          state.answered = true;
+          renderQuiz(true);
+          setTimeout(nextQuestion, 2000);
+        } else {
+          document.querySelector('.timer').textContent = `Time left: ${state.timer}s`;
+        }
+      }, 1000);
+    }
+
+    renderMenu();
+  </script>
+
+  <div class="footer">
+    <p>Created by Gelo Aves @ Team A1C Trece Branch</p>
+  </div>
+</body>
+</html>
